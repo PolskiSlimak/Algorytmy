@@ -1,0 +1,108 @@
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+struct elem{
+    int dane;       // miejsce na przechowywanie danych zapamiÄ?tanych w danym elemencie
+    elem* nast;     // wskaĹşnik na kolejny element stosu (wĹ?aĹ?ciwie to poprzedni dodany)
+};
+
+void push (elem* &stos, int x)
+{
+    elem* nowy = new elem;
+    nowy->dane = x;
+    nowy->nast = stos;
+    stos = nowy;
+}
+
+int pop (elem* &stos)
+{
+    if (stos != NULL) {
+		int wynik = stos->dane;
+		stos = stos->nast;
+		return wynik;	
+	} else {
+		cout << "Stos jest pusty";
+		return 0;		
+	} 
+		
+	
+	
+}
+
+int topEl (elem* stos)
+{
+	if (stos != NULL) {
+		int wynik = stos->dane;
+		return wynik; 
+	} else {
+		cout << "Stos pusty";
+		return 0;	
+	}
+    
+}
+
+bool isEmpty(elem* stos)
+{
+    return !stos;
+}
+
+int main()
+{
+    elem *mojStos = NULL;     // utworzenie poczÄ?tku stosu
+
+    cout << "Czy stos jest pusty?\t" << isEmpty(mojStos) << endl;    // 1 = stos jest pusty
+
+    cout << "Umieszczam na stosie kilka elementow... ";
+    // wĹ?oĹźenie na stos kilku elementĂłw
+    push(mojStos, 7);       cout << "(7) ";
+    push(mojStos, 29);      cout << "(29) ";
+    push(mojStos, 11);      cout << "(11) ";
+    cout << endl;
+
+    cout << "Czy stos jest pusty?\t" << isEmpty(mojStos) << endl;    // 0 = stos nie jest pusty
+
+    cout << "Sprawdzam, co jest na wierzchu stosu...\t" << topEl(mojStos) << endl; // sprawdzenie, co jest na wierzchu stosu
+    cout << "Ponownie sprawdzam, co jest na wierzchu stosu...\t" << topEl(mojStos) << endl; // sprawdzenie, co jest na wierzchu stosu
+
+    cout << "Pobieram element z wierzchu stosu...\t" << pop(mojStos) << endl;   // pobranie elementu z wierzchu stosu
+
+    cout << "Umieszczam element na stosie... " << "(3) " << endl;
+    push(mojStos, 3);       // wĹ?oĹźenie elementu na stos
+
+    cout << "Pobieram kolejne elementy ze stosu... " << endl;
+    // pobranie kolejnych elementĂłw ze stosu
+    cout << pop(mojStos) << "\t";
+    cout << pop(mojStos) << "\t";
+    cout << pop(mojStos) << "\t ";
+    cout << endl;
+
+    cout << "Czy stos jest pusty?\t" << isEmpty(mojStos) << endl;    // 1 = stos jest pusty
+
+    cout << endl;
+
+    cout << "Umieszczam elementy na stosie... ";
+    // umieszczenie kilku elementĂłw na stosie
+    push(mojStos, 78);       cout << "(78) ";
+    push(mojStos, 52);       cout << "(52) ";
+    push(mojStos, 110);      cout << "(110) ";
+    push(mojStos, 47);       cout << "(47) ";
+    push(mojStos, 9);        cout << "(9) ";
+    cout << endl;
+
+    cout << "Pobieram kolejne elementy ze stosu az bedzie pusty...\t";
+    // pobranie kolejnych elementĂłw ze stosu, aĹź do caĹ?kowitego oprĂłĹźnienia
+    while(!isEmpty(mojStos))    // dopĂłki stos nie jest pusty
+        cout << pop(mojStos) << "  ";    // pobierz element
+    cout << endl;
+
+    cout << "Czy stos jest pusty?\t" << isEmpty(mojStos) << endl;    // 1 = stos jest pusty
+
+    cout << endl;
+
+    cout << "Pobieram element z PUSTEGO stosu...\t" << pop(mojStos) << " ";    // pobierz element
+
+
+    return 0;
+}
