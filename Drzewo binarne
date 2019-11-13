@@ -3,49 +3,72 @@
 using namespace std;
 
 struct node {
-	int data;
-	node* left;
-	node* right;
+    int data;
+    node* left;
+    node* right;
 };
 void add (int data, node*& tree){
-	node* fresh = new node;
-	fresh->data = data;
-	fresh->left = NULL;
-	fresh->right = NULL;
-	if(tree != NULL){
-		node* prev = tree;
-		while(prev != NULL){
-		if(fresh->data >= prev->data){
-			if(prev->right == NULL){
-				prev->right = fresh;
-				break;
-			}else{
-				prev = prev->right;
-			}
-			}else{
-				if(prev->left == NULL){
-					prev->left = fresh;
-					break;
-				}else{
-					prev = prev->left;
-				}
-			}
-		}
-	}else{
-		tree = fresh;
-	}
+    node* fresh = new node;
+    fresh->data = data;
+    fresh->left = NULL;
+    fresh->right = NULL;
+    if(tree != NULL){
+        node* prev = tree;
+        while(prev != NULL){
+            if(fresh->data >= prev->data){
+                if(prev->right == NULL){
+                    prev->right = fresh;
+                    break;
+                }else{
+                    prev = prev->right;
+                }
+            }else{
+                if(prev->left == NULL){
+                    prev->left = fresh;
+                    break;
+                }else{
+                    prev = prev->left;
+                }
+            }
+        }
+    }else{
+        tree = fresh;
+    }
 }
+void add_rec(int data, node*& tree){
 
+}
+void preorder(node* tree){
+    if(tree != NULL){
+        cout << tree->data << " ";
+        preorder(tree->left);
+        preorder(tree->right);
+    }
+}
+void inorder(node* tree){
+    if(tree != NULL){
+        inorder(tree->left);
+        cout << tree->data << " ";
+        inorder(tree->right);
+    }
+}
+void postorder(node* tree){
+    if(tree != NULL){
+        postorder(tree->left);
+        postorder(tree->right);
+        cout << tree->data << " ";
+    }
+}
 void show_rec(node* tree, int step = 0){
-	if(tree!= NULL){
-		for(int i = 0; i<step; i++){
-			cout << " ";
-		}	
-		cout << tree->data << endl;			
-		step++;
-		show_rec(tree->left, step);
-		show_rec(tree->right, step);
-	}	
+    if(tree!= NULL){
+        for(int i = 0; i<step; i++){
+            cout << " ";
+        }
+        cout << tree->data << endl;
+        step++;
+        show_rec(tree->left, step);
+        show_rec(tree->right, step);
+    }
 }
 
 int main()
@@ -53,8 +76,16 @@ int main()
     node* tree = NULL;
     add(12, tree);
     add(25, tree);
-    add(23, tree);
     add(26, tree);
     add(11, tree);
+    add(10, tree);
+    add(13, tree);
     show_rec(tree);
+    cout << endl;
+    /*cout << endl;
+    preorder(tree);
+    cout << endl;
+    inorder(tree);
+    cout << endl;
+    postorder(tree);*/
 }
