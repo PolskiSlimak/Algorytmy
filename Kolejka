@@ -16,6 +16,16 @@ void add(elem* &pocz_kolejki, elem* &kon_kolejki, int x)
 	kon_kolejki = nowy;//nasz nowo utworzony obiekt jest koncem kolejki rowniez
 }
 
+int delLast(elem* &pocz_kolejki, elem* &kon_kolejki){
+    elem *ptr=pocz_kolejki;
+    while(ptr->nast!=kon_kolejki) 
+        ptr=ptr->nast;
+    int x=kon_kolejki->dana;
+    delete kon_kolejki;
+    kon_kolejki=ptr;
+    kon_kolejki->next=NULL;
+    return x;
+
 int next(elem* &pocz_kolejki, elem* &kon_kolejki)
 {
    if (!pocz_kolejki){//jezeli poczatek nie istnieje to piszemy po prostu error
@@ -24,8 +34,11 @@ int next(elem* &pocz_kolejki, elem* &kon_kolejki)
    }else {
     	elem* stary = pocz_kolejki;//tworzymy pomocniczy wskaznik na poczatek kolejki
     	int dana = stary->dana; //pobieramy sobie dana z poczatku
-    	pocz_kolejki = pocz_kolejki->nast;//ustawiamy zeby nasz poczatek pokazyal na drugi w kolejce obiekt (bo pierwszy usuwamy)
-    	delete stary;//usuwamy stary
+	if(pocz_kolejki->nast)
+    		pocz_kolejki = pocz_kolejki->nast;//ustawiamy zeby nasz poczatek pokazyal na drugi w kolejce obiekt (bo pierwszy usuwamy)
+	else
+		cout << "Kolejka jest jednoelementowa";
+	delete stary;//usuwamy stary
     	return dana;//zwracamy wartosc pierwszego obiektu
    }
 }
