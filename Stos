@@ -20,7 +20,9 @@ int pop (elem* &stos)
 {
     if (stos != NULL) {
 		int wynik = stos->dane;
+		elem *first = stos;
 		stos = stos->nast;
+		delete first;
 		return wynik;	
 	} else {
 		cout << "Stos jest pusty";
@@ -34,8 +36,7 @@ int pop (elem* &stos)
 int topEl (elem* stos)
 {
 	if (stos != NULL) {
-		int wynik = stos->dane;
-		return wynik; 
+		return stos->dane;
 	} else {
 		cout << "Stos pusty";
 		return 0;	
