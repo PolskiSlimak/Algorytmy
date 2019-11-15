@@ -35,8 +35,139 @@ void add (int data, node*& tree){
         tree = fresh;
     }
 }
-void add_rec(int data, node*& tree){
-
+/*void add_rec(int data, node*& tree, node* prev=tree){
+    if(tree == NULL){
+        node* fresh = new node;
+        fresh->data = data;
+        fresh->left = NULL;
+        fresh->right = NULL;
+        tree = fresh;
+        return;
+    }
+    node* fresh = new node;
+    fresh->data = data;
+    fresh->left = NULL;
+    fresh->right = NULL;
+    if(fresh->data >= prev->data){
+        if(prev->right == NULL){
+            prev->right = fresh;
+            return;
+        }else{
+            delete fresh;
+            add_rec(data, prev->right);
+        }
+    }else{
+        if(prev->left == NULL){
+            prev->left = fresh;
+            return;
+        }else{
+            delete fresh;
+            add_rec(data, prev->left);
+        }
+    }
+}*/
+void delete_number(int todelete, node*& tree){
+    if(tree == NULL){
+        cout << "Drzewo puste";
+        return;
+    }
+    if(tree->left == NULL && tree->right == NULL && tree->data == todelete){
+        tree = NULL;
+        delete tree;
+        return;
+    }
+    node *searcher = tree;
+    node* prev = tree;
+    while(searcher->data != todelete){
+        if(todelete > searcher->data){
+            prev = searcher;
+            searcher = searcher->right;
+        }else if(todelete < searcher->data){
+            prev = searcher;
+            searcher = searcher->left;
+        }
+        if(searcher == NULL){
+            cout << "nie ma tego elementu w drzewie";
+            return;
+        }
+    }
+        if(searcher->left == NULL){
+            if(searcher->right == NULL){
+                if(prev->left == searcher){
+                    prev->left = NULL;
+                    delete searcher;
+                }else if(prev->right == searcher){
+                    prev->right = NULL;
+                    delete searcher;
+                }
+            }else{
+                if(prev->left == searcher){
+                    prev->left = searcher->right;
+                    delete searcher;
+                }else if(prev->right == searcher){
+                    prev->right = searcher->right;
+                    delete searcher;
+                }
+            }
+        }else{
+            if(searcher->right == NULL){
+                if(prev->left == searcher){
+                    prev->left = searcher->left;
+                    delete searcher;
+                }else if(prev->right == searcher){
+                    prev->right = searcher->left;
+                    delete searcher;
+                }
+            }else{
+                if(searcher->right->left == NULL){
+                    node* pom = searcher->right;
+                    searcher->data = searcher->right->data;
+                    searcher->right = searcher->right->right;
+                    delete pom;
+                }else{
+                    if(searcher->right->left->right == NULL){
+                        node* pom = searcher->right->left;
+                        searcher->data = searcher->right->left->data;
+                        searcher->right->left = NULL;
+                        delete pom;
+                    }else{
+                        node* pom = searcher->right->left->right;
+                        searcher->data = searcher->right->left->data;
+                        searcher->right->left->data = searcher->right->left->right->data;
+                        searcher->right->left->right = NULL;
+                        delete pom;
+                    }
+                }
+            }
+        }
+}
+bool search (int tosearch, node* tree){
+    if(tree == NULL){
+        return false;
+    }
+    while(tree != NULL){
+        if(tosearch == tree->data){
+            return true;
+        }else if(tosearch > tree->data){
+            tree = tree->right;
+        }else if(tosearch < tree->data){
+            tree = tree->left;
+        }
+    }
+    return false;
+}
+bool search_rec(int tosearch, node*tree){
+    if(tree == NULL){
+        return false;
+    }
+    if(tosearch == tree->data){
+        return true;
+    }
+    if(tosearch > tree->data){
+        search_rec(tosearch, tree->right);
+    }else{
+        search_rec(tosearch, tree->left);
+    }
 }
 void preorder(node* tree){
     if(tree != NULL){
@@ -74,14 +205,19 @@ void show_rec(node* tree, int step = 0){
 int main()
 {
     node* tree = NULL;
-    add(12, tree);
-    add(25, tree);
-    add(26, tree);
-    add(11, tree);
-    add(10, tree);
-    add(13, tree);
+    add(250, tree);
+    add(270, tree);
+    add(240, tree);
+    add(225, tree);
+    add(231, tree);
+    add(226, tree);
+    add(227, tree);
+    add(232, tree);
+    add(224, tree);
     show_rec(tree);
     cout << endl;
+    delete_number(225,tree);
+    show_rec(tree);
     /*cout << endl;
     preorder(tree);
     cout << endl;
