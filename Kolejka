@@ -63,3 +63,20 @@ void show(elem* pocz_kolejki)
 		temp = temp->nast;	//i wchodzimy w nastepny obiekt w kolejce
 	}
 }
+
+//wyświetla od końca
+void show(elem *first){
+    if(!first){
+       cout << "Kolejka jest pusta";
+    }
+    else{
+        elem *ptr;
+        while(first){
+            ptr=first;
+            while(ptr->next!=NULL){
+                ptr=ptr->next;
+            }
+                cout << ptr->data;
+        }
+    }
+}
