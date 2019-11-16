@@ -73,7 +73,7 @@ void dell (int nr, elem*& list){
         while(counter != (nr-1)){
             pom = pom->next;
             counter++;
-            if(list == NULL){
+            if(pom == NULL){
                 cout << "Lista za krotka";
                 return;
             }
