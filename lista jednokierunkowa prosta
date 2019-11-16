@@ -55,64 +55,37 @@ void convert(elem*& list){
 		tmp -> nast = poczatek;
 	}
 }
-struct list {
-    elem* first; //pierwsza liczba
-   
-    void add (int data){
-        elem* neww = new elem;//tworzenie elemetu
-        neww->data = data;//wpisujemy nasza liczbe podana od uzytkownika
-        if (first == 0) {
-            first = neww;   //jesli jest to pierwsza liczba to musimy to zaznaczyc w naszej liscie     
-        } else {
-            elem* temp = first; // szukamy konca
-            while (temp->next != NULL) {
-                temp = temp->next; //skaczemy po wskaznikach wszystkich obiektow
-            }  
-            temp->next = neww; //ostatni pokazuje ten nasz nowo dodany
-            neww->next = 0;  //musimy ustawic ten nowo dodany zeby nie wskazywal na nic
-        }          
+void dell (int nr, elem*& list){
+    if(list == NULL){
+        cout << "Lista nie istnieje";
+        return;
     }
-   
-    void dell (int nr){
-        //Jesli usuwamy pierwszy element to pierwsza ma zniknac i druga ma sie stac pierwsza stad zmieniam wskaznik poczatku listy
-        if (nr == 1) {
-            elem* temp = first;
-            first = temp->next;
+    if(list->next == NULL){
+        list = NULL;
+        delete list;
+    }else if(nr == 1){
+        elem* pom = list;
+        list = list->next;
+        delete pom;
+    }else if(nr > 1){
+        int counter = 1;
+        elem* pom = list;
+        while(counter != (nr-1)){
+            pom = pom->next;
+            counter++;
+            if(list == NULL){
+                cout << "Lista za krotka";
+                return;
+            }
         }
-        //Jesli nie jest to pierwszy element to szukamy najpierw wskaznika na osobe 1 mniejsza od szukanej
-        if (nr>=2) {
-            int j = 1;
-            elem* temp = first;
-            while (temp != NULL) {
-                if ((j+1) == nr) {
-                    break;
-                }//sprawdzamy czy mamy juz wskaznik na osobie 1 mniejsza jak nie to przewijamy az znajdziemy
-                j++;
-                temp=temp->next;   
-            }
-            //sprawdzamy jeszcze czy czasem nie jest to ostatni element bo jesli tak to zerujemy go
-            if (temp->next->next == 0) {
-                temp->next = 0;
-            } else {
-                temp->next = temp->next->next;
-            }
-                   
-        }      
-    }
-   
-    /*Pokazywanie przebiega w ten sposob:
-    cout << numbers->first->data << endl;
-    cout << numbers->first->next->data << endl; i tak dalej*/
-    void show () {
-        elem* temp = first;
-        while (temp != NULL) {
-            cout << "Liczba: " << temp->data << endl;
-            temp = temp->next; // przechodzimy po kolejnych wskaznikach pokazujacych na kolejne obiekty
+        if(pom->next != NULL){
+            elem* deleter = pom->next;
+            pom->next = pom->next->next;
+            delete deleter;
+        }else{
+            delete pom->next;
+            pom->next = NULL;
         }
     }
-   
-    list() {
-        first = 0; 
-    }
-};
+}
 
