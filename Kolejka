@@ -63,7 +63,13 @@ void show(elem* pocz_kolejki)
 		temp = temp->nast;	//i wchodzimy w nastepny obiekt w kolejce
 	}
 }
-
+void show_rec(elem*pocz_kolejki){
+    if(pocz_kolejki == NULL){
+        return;
+    }
+    cout << "Liczba: " << pocz_kolejki->dana;
+    show_rec(pocz_kolejki->nast);
+}
 //wyświetla od końca
 void show(elem *first){
     if(!first){
