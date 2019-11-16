@@ -61,8 +61,8 @@ void dell (int nr, elem*& list){
         return;
     }
     if(list->next == NULL){
-        list = NULL;
         delete list;
+	list = NULL;
     }else if(nr == 1){
         elem* pom = list;
         list = list->next;
