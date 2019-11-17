@@ -52,7 +52,7 @@ void convert(elem*& list){
 		{
 			tmp = tmp -> nast;
 		} 
-		tmp -> nast = poczatek;
+		tmp -> nast = list;
 	}
 }
 void dell (int nr, elem*& list){
