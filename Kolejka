@@ -25,7 +25,7 @@ int delLast(elem* &pocz_kolejki, elem* &kon_kolejki){
     kon_kolejki=ptr;
     kon_kolejki->next=NULL;
     return x;
-
+}
 int next(elem* &pocz_kolejki, elem* &kon_kolejki)
 {
    if (!pocz_kolejki){//jezeli poczatek nie istnieje to piszemy po prostu error
@@ -63,33 +63,11 @@ void show(elem* pocz_kolejki)
 		temp = temp->nast;	//i wchodzimy w nastepny obiekt w kolejce
 	}
 }
-void show_rec(elem*pocz_kolejki){
-    if(pocz_kolejki == NULL){
-        return;
-    }
-    cout << "Liczba: " << pocz_kolejki->dana;
-    show_rec(pocz_kolejki->nast);
-}
-//wyświetla od końca
-void show(elem *first){
-    if(!first){
-       cout << "Kolejka jest pusta";
-    }
-    else{
-        elem *ptr;
-        while(first){
-            ptr=first;
-            while(ptr->next!=NULL){
-                ptr=ptr->next;
-            }
-                cout << ptr->data;
-        }
-    }
-}
-/* void reverse_REC(elem * first){
+
+void reverse_REC(elem * first){
 if(!first){
 	cout << " Kolejka jest pusta" << endl;
 }
 reverse_REC(first -> next);
 cout << first -> data << " ";
-*/
+}
