@@ -71,66 +71,66 @@ void delete_number(int todelete, node*& tree){            //dobre lvl up, usuwan
         cout << "Drzewo puste"; 
         return;
     }
-    if(tree->left == NULL && tree->right == NULL && tree->data == todelete){
-        tree = NULL;
-        delete tree;
-        return;
+    if(tree->left == NULL && tree->right == NULL && tree->data == todelete){ 
+        tree = NULL;                                        // usuwanie pierwzego elementu na prawo i na lewo od korzenia nic nie ma
+        delete tree;                                        // serowanie wyzej nie wiem po co  i usuwanie drzewa pewnie przez jakies wycieki pamieci
+        return;                                             // wychodizmy
     }
-    node *searcher = tree;
-    node* prev = tree;
-    while(searcher->data != todelete){
-        if(todelete > searcher->data){
-            prev = searcher;
-            searcher = searcher->right;
-        }else if(todelete < searcher->data){
-            prev = searcher;
-            searcher = searcher->left;
+    node *searcher = tree;                                  //robimy pomocnika ja to nazywa biegaczem ustawiamy na poczatek 
+    node* prev = tree;                                      // robimy pomocnoika który bedzie wskazywal na poprzednika 
+    while(searcher->data != todelete){                      // dopoki data z biegacza nie bedzie rowna temu co ma zostac usuniete jazda łogień
+        if(todelete > searcher->data){                      // jesli to co jest do usuniecia jest wieksze od wartosci w biegaczu
+            prev = searcher;                                // to zapisujemy wartosc biegacza do preva albo maratończyka 
+            searcher = searcher->right;                     // i lecimy na prtawy element od biegacza
+        }else if(todelete < searcher->data){                // natomiast jesli jest wartosc mniejsza lecimy na lewoo
+            prev = searcher;                                //same
+            searcher = searcher->left;                      //same tylko ze na lewo
         }
-        if(searcher == NULL){
-            cout << "nie ma tego elementu w drzewie";
-            return;
+        if(searcher == NULL){                               // teraz jesli natrafimy na nulla i zadnych z poprzednich warunkow nie spelnilismy  
+            cout << "nie ma tego elementu w drzewie";       // to odp znjduje sie po cou'cie
+            return;                                         //wychodzimy bye bye
         }
     }
-        if(searcher->left == NULL){
-            if(searcher->right == NULL){
-                if(prev->left == searcher){
-                    prev->left = NULL;
-                    delete searcher;
-                }else if(prev->right == searcher){
-                    prev->right = NULL;
-                    delete searcher;
-                }
-            }else{
-                if(prev->left == searcher){
-                    prev->left = searcher->right;
-                    delete searcher;
-                }else if(prev->right == searcher){
-                    prev->right = searcher->right;
-                    delete searcher;
-                }
-            }
-        }else{
-            if(searcher->right == NULL){
-                if(prev->left == searcher){
-                    prev->left = searcher->left;
-                    delete searcher;
-                }else if(prev->right == searcher){
-                    prev->right = searcher->left;
+        if(searcher->left == NULL){                         // jesli lewywezel czy podwezel biegacza jest nulllerm 
+            if(searcher->right == NULL){                     // i prawa stronka biegacza rowniez 
+                if(prev->left == searcher){                 // i jesli lewa stronka poprzednika to jest biegacz
+                    prev->left = NULL;                      // to usuwamy wskaznik na biegacza  
+                    delete searcher;                        //usuwamy samego biegacza   
+                }else if(prev->right == searcher){          // tak samo dla tylko dla prawej stronki
+                    prev->right = NULL;                     //same  
+                    delete searcher;                        //same
+                }                                           
+            }else{                                          //teraz to samo ttylko chyba jak cos tu jest naprawym podwezle
+                if(prev->left == searcher){                 // a to jak wyzej
+                    prev->left = searcher->right;           // tuprzekazujemy wartosc aby przeszla na miejsce biegacza(serchera)
+                    delete searcher;                        //usuwamy jak widac
+                }else if(prev->right == searcher){  
+                    prev->right = searcher->right;         //tu przekazujemy wartosc z prawego wezla zeby przeszla na miejsce biegacza(serchera)
                     delete searcher;
                 }
-            }else{
-                if(searcher->right->left == NULL){
-                    node* pom = searcher->right;
-                    searcher->data = searcher->right->data;
-                    searcher->right = searcher->right->right;
-                    delete pom;
-                }else{
-                    if(searcher->right->left->right == NULL){
-                        node* pom = searcher->right->left;
+            }                                                   //UWAGA TERAZ SIE ZACZYNA KOSMOS KTORY JETS LATWY DO OGARNIECIA
+        }else{                                                  //CHYBA ze cos sie znaduje na lewo ze tp juz nie jest null
+            if(searcher->right == NULL){                        // ale na prawo nic nie ma  
+                if(prev->left == searcher){                     // i na lewo sie znajduje biegacz   
+                    prev->left = searcher->left;                // to na meijsce biegacza wkladamy  wartosc z lewej strony biegacza
+                    delete searcher;
+                }else if(prev->right == searcher){              // to samo tylko ze 
+                    prev->right = searcher->left;               // ta sama zasada jak wczesniej tylkoo ze na prawo od preva
+                    delete searcher;    
+                }
+            }else{                                              // teraz jesli na prawo cos jest od biegacza 
+                if(searcher->right->left == NULL){              // no i teraz od biegacza na prawo w wezle na lewo nie ma nic   
+                    node* pom = searcher->right;                // pomocnizy wskaznik robnimy ktory zawiera to co jest na prawo od 
+                    searcher->data = searcher->right->data;     // wartosc biegaca  to wartosc prawego wezla  nadpisujemy wartosc
+                    searcher->right = searcher->right->right;    // a praway adres biegacza to adres prawego wezła biegacza ale jego prawy adres
+                    delete pom;                             
+                }else{                                          // teraz jesli cos tam jest w sensie na prawo na lewo 
+                    if(searcher->right->left->right == NULL){   // jesli  ciezko mi to wytlumaczyc pewnie juz rozumiesz
+                        node* pom = searcher->right->left;      // to na rozrysowanie to jest ten algorytm
                         searcher->data = searcher->right->left->data;
                         searcher->right->left = NULL;
                         delete pom;
-                    }else{
+                    }else{                                   // to samo tylko jesli tu cos jest to trezba rozrysowac i tyle 
                         node* pom = searcher->right->left->right;
                         searcher->data = searcher->right->left->data;
                         searcher->right->left->data = searcher->right->left->right->data;
