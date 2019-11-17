@@ -86,3 +86,9 @@ void show(elem *first){
         }
     }
 }
+/* void reverse(elem * first){
+if(!first){
+	cout << " Kolejka jest pusta" << endl;
+}
+reverse(first -> next);
+cout << first -> data << " ";
