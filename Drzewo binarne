@@ -7,66 +7,66 @@ struct node { // tworzymy strukture
     node* left;
     node* right;
 };
-void add (int data, node*& tree){           // MOZE TAK BEDZIE CZYTELNIEJSZE IDK    
-    node* fresh = new node;                 // tworzymy nowa strukture gdzie mozemy wsadzić nasze wartosci
-    fresh->data = data;                     // przekazujemy wartosc do wartosci
-    fresh->left = NULL;                     // ustawiamy galezie  na null iż nie wiemy co bedzie po prawej lub lewej stronie
-    fresh->right = NULL;                    // same
-    if(tree != NULL){                       // spprawdzamy czy drzewo jest puuste ten przyapdek rozpatruje ze nie jest puste
-        node* prev = tree;                  // zapisujemy poczatek dzrwa aby sie poruszać po nim nie to taki nasz runner albo helper 
-        while(prev != NULL){                // dopoki drzewo nie bedzie wskazywac na nulla
-            if(fresh->data >= prev->data){  // jesli wartosc naszego nowego elemetu jest wieksza BADZ ROWNA od KORZENIA/wezla n asteponego to idziemy w prawo
-                if(prev->right == NULL){    // teraz sprawdzamy czy jest wartosc obok wezla pusta jesli tak to wprowadzamy za nulla nulla napisujemy tak ?
-                    prev->right = fresh;    // to nadpisanie tutaj nastepuje
-                    break;                  // wychodzimy
+void add (int data, node*& tree){                       // MOZE TAK BEDZIE CZYTELNIEJSZE IDK    
+    node* fresh = new node;                             // tworzymy nowa strukture gdzie mozemy wsadzić nasze wartosci
+    fresh->data = data;                                 // przekazujemy wartosc do wartosci
+    fresh->left = NULL;                                 // ustawiamy galezie  na null iż nie wiemy co bedzie po prawej lub lewej stronie
+    fresh->right = NULL;                                // same
+    if(tree != NULL){                                   // spprawdzamy czy drzewo jest puuste ten przyapdek rozpatruje ze nie jest puste
+        node* prev = tree;                              // zapisujemy poczatek dzrwa aby sie poruszać po nim nie to taki nasz runner albo helper 
+        while(prev != NULL){                            // dopoki drzewo nie bedzie wskazywac na nulla
+            if(fresh->data >= prev->data){              // jesli wartosc naszego nowego elemetu jest wieksza BADZ ROWNA od KORZENIA/wezla n asteponego to idziemy w prawo
+                if(prev->right == NULL){                // teraz sprawdzamy czy jest wartosc obok wezla pusta jesli tak to wprowadzamy za nulla nulla napisujemy tak ?
+                    prev->right = fresh;                // to nadpisanie tutaj nastepuje
+                    break;                              // wychodzimy
                 }else{
-                    prev = prev->right;     // jesli nie natrafilismy napuste lecimy dalej z koxem tak w kolko 
+                    prev = prev->right;                 // jesli nie natrafilismy napuste lecimy dalej z koxem tak w kolko 
                 }
-            }else{                          // tam mielismy wieksze lub = no to tu mniejsze jasna sprawa
-                if(prev->left == NULL){     // TA SAMA ZASAda jak wczesniej nie bede komentowac
+            }else{                                      // tam mielismy wieksze lub = no to tu mniejsze jasna sprawa
+                if(prev->left == NULL){                 // TA SAMA ZASAda jak wczesniej nie bede komentowac
                     prev->left = fresh;
                     break;
                 }else{
                     prev = prev->left;
                 }
             }
-        }
-    }else{                                   // nasze drzewo jest puste czyli nasz swtorzony wezel jest na arzie sam
+        }   
+    }else{                                              // nasze drzewo jest puste czyli nasz swtorzony wezel jest na arzie sam
         tree = fresh;
     }
 }
-/*void add_rec(int data, node*& tree, node* prev=tree){
-    if(tree == NULL){
-        node* fresh = new node;
-        fresh->data = data;
-        fresh->left = NULL;
-        fresh->right = NULL;
-        tree = fresh;
-        return;
+/*void add_rec(int data, node*& tree, node* prev=tree){ // dodawanie rekurencyjne czyli jak wiemy to wywolywanie funkcji do warunku
+    if(tree == NULL){                                   // jesli ddrzewo nie jest puste (ogolnie w tym tree tkwi nasz korzen z reguly) 
+        node* fresh = new node;                         // tworzymy sobie wezeł  on bedzie taki bardziej pomomocniczy zeby żonglować wartościami 
+        fresh->data = data;                             // do fresha w miejsce gdzie wchodzi wartosci wkladamy wartosc podana przez "uzytkownika"
+        fresh->left = NULL;                             // wskazniki na null bo no dodajemy i nie wiemy co bedzie po prawej czy po lewej    
+        fresh->right = NULL;                            // same
+        tree = fresh;                                   // no i co mamy nasz korzeń przypisujemy go do tree w sensie wsyztskie wartosci kopiujemy automatycznie
+        return;                                         //wychodzimy z if'a ???????????????????????????????????????????????
     }
-    node* fresh = new node;
-    fresh->data = data;
-    fresh->left = NULL;
-    fresh->right = NULL;
-    if(fresh->data >= prev->data){
-        if(prev->right == NULL){
+    node* fresh = new node;                             // a to jezli nie jest puste
+    fresh->data = data;                                 // jak wyzej 
+    fresh->left = NULL;                                 // same
+    fresh->right = NULL;                                // same 
+    if(fresh->data >= prev->data){                      // to tak jak wyzej te same zasay   
+        if(prev->right == NULL){                        //same
             prev->right = fresh;
             return;
         }else{
-            delete fresh;
-            add_rec(data, prev->right);
+            delete fresh;                                 //zastanawiasz sie na kij usuwamy fresha no bo po co nam porownujemy wartosc data i jezeli nie znalezlismy musimy znowu utworzyc nowy node ale przejsc w prawo i znou szukac nulla
+            add_rec(data, prev->right);                  // tylko tu jest powtorka funkcji bo nie natrafilismy na null'a
         }
     }else{
         if(prev->left == NULL){
             prev->left = fresh;
             return;
         }else{
-            delete fresh;
-            add_rec(data, prev->left);
+            delete fresh;                                  //same TAK MI SIE WYDAJE 
+            add_rec(data, prev->left);                    // to samo nie natrafilismy na puste miejsce gałąz i musimy robic az znajdziemy
         }
     }
 }*/
-void delete_number(int todelete, node*& tree){
+void delete_number(int todelete, node*& tree){            //dobre lvl up, usuwanie jest spooko ale w ciul duzo warunków na koniec zostawiam to
     if(tree == NULL){
         cout << "Drzewo puste";
         return;
@@ -141,32 +141,32 @@ void delete_number(int todelete, node*& tree){
             }
         }
 }
-bool search (int tosearch, node* tree){
-    if(tree == NULL){
-        return false;
+bool search (int tosearch, node* tree){                          // ogolnie tu szukamy liczby w drzewie 
+    if(tree == NULL){                                           // jesli drzewo jest nullem to nie ma zadnych wartosci jest puste nie ma DRZEWAA isssEmptyy
+        return false;                                           //zwracamy false bo nie ma drzewa
+    }   
+    while(tree != NULL){                                        // dopoki drzewo nie jest nullem lecimy po kolei
+        if(tosearch == tree->data){                             // ogolnie liczba = wchodzimy w struturke treee i wyciagmy z niej 1 z 3 waertosci mianowice data
+            return true;                                        // jezeli warunek ok no to super 
+        }else if(tosearch > tree->data){                        // jesli nie to znowu porownujemy liczbe z = wartoscia w wezle
+            tree = tree->right;                                 // jest wieksza ? lecimy z naszego wezla na prawo z nadzija ze w nastepnym ciegu peli spelni sie warunek nr 1
+        }else if(tosearch < tree->data){                        // same tylko dla mniejszej liczby od liczby w wezle
+            tree = tree->left;                                  // same jak dwie linijki wyzej tylko ze na lewo
+        }   
     }
-    while(tree != NULL){
-        if(tosearch == tree->data){
-            return true;
-        }else if(tosearch > tree->data){
-            tree = tree->right;
-        }else if(tosearch < tree->data){
-            tree = tree->left;
-        }
-    }
-    return false;
-}
-bool search_rec(int tosearch, node*tree){
-    if(tree == NULL){
-        return false;
-    }
-    if(tosearch == tree->data){
+    return false;                                               // jesli dotrze na koniec i zakonczy petle bo natrafi na nulla to zwrtacmy false bo takiej liczby po prostu nie ma uzytkownik nie mysli
+}                                                               // moze jak mu powiemy ze mozg to apka to zacznie go używać ;) Przepraszam musialam to napisac 
+bool search_rec(int tosearch, node*tree){                       // ogolnie to jest to samo tylko wywolywanie funkcjido NATRAFIENIA NA nullalub wartosci ktorej szukamy chyba
+    if(tree == NULL){                                           // same jak wyzej
+        return false;                           
+    }   
+    if(tosearch == tree->data){                                 // same jak wyzej tylko ze ogolnie tu jest if bo tu warunek sprawdzamy mamy dwie opcje tylko
         return true;
     }
-    if(tosearch > tree->data){
-        search_rec(tosearch, tree->right);
-    }else{
-        search_rec(tosearch, tree->left);
+    if(tosearch > tree->data){                                  //to sa ogolnie te dwa warunki ktore nam robia za petle o to sie rozbiega
+        search_rec(tosearch, tree->right);                      // wywolywanie znowu tej funkcji tylko zed wezel nam przechodzi na wezel ktory jest na PRAWO
+    }else{      
+        search_rec(tosearch, tree->left);                       // same tylko ze wezel przechodzi na ten wezel ktory jest na lewo
     }
 }
 void preorder(node* tree){
@@ -202,10 +202,10 @@ void show_rec(node* tree, int step = 0){
     }
 }
 
-int main()
+int main()                                                       // no to jest main
 {
-    node* tree = NULL;
-    add(250, tree);
+    node* tree = NULL;                                           // tu sobie drzewko torzymy ktorej jjest aktualnie puste dalej dodajemy i wywolujemy poszczegolne funkcje
+    add(250, tree);                                              // to tlumaczenie sobie daruje 
     add(270, tree);
     add(240, tree);
     add(225, tree);
