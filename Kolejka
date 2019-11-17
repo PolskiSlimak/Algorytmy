@@ -92,3 +92,4 @@ if(!first){
 }
 reverse(first -> next);
 cout << first -> data << " ";
+*/
