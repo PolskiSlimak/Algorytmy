@@ -17,60 +17,46 @@ int how_many(elem* list){ //przekazujemy adres pierwszego elementu listy przez w
 	}
 	return i;
 }
-
-void add_any_position (int data, int position, elem*& list) { //podajemy co chcemy dodać, na którą pozycję i przekazujemy adres przez referencję (czyli operujemy na prawdziwym adresie, a nie kopii)
-	if (list == NULL){ //jeśli lista nie istnieje
-		elem* first = new elem; //tworzymy pierwszy element
-		first->data = data; //do pola data pierwszego obiektu wstawiamy podaną liczbę
-		first->next = NULL; //pole next pierwszego elementu nie zawiera żadnego adresu, czyli obiekt nie pokazuje na następny
-		first->prev = NULL; //pole prev pierwszego elementu nie zawiera żadnego adresu, czyli obiekt nie pokazuje na poprzedni
-		list = first; //utoworzony obiekt jest adresem listy
-		return;
-	}
-	if (position == 1) { //jeśli chcemy dodać obiekt z lewej strony
-		elem* temp = new elem; //tworzymy ten obiekt
-		temp->data = data; 
-		temp->next = list;
-		temp->prev = NULL; //jest pierwszy na liście, więc nie pokazuje na żaden poprzedni
-		list->prev = temp; //musimy ustawić żeby element przed który wstawiamy nasz obiekt pokazywał na niego jako na poprzedni, czyli do jego preva obiektu list dajemy adres tempa
-		list = temp; //ustawiamy, że adresem listy jest adres obiektu temp
-	}else if(position > 1 && (how_many(list) >= position)){ //a jakby tutaj zrobić > zamiast >= to można by wywalić tego ifa z za krótką listą
-		elem* temp = new elem;
-		temp->data = data;
-		int counter = 1;
-		elem* back = list; //wskaźnik na pierwszy element listy
-		while (counter != (position-1)) { //jeśli chcemy wstawić obiekt na np. 4 pozycję to wskaźnik back zatrzyma się na 3 elemencie
-			counter++;
-			back = back->next;
-			if (back == NULL) { //jak dojedziemy do końca listy i w ostatnim elemencie next będzie puste to back ustawi się na NULL
-				cout << "Lista za krotka";
-				return;
-			}
-		}
-		temp->next = back->next; //next nowo utworzonego elementu przyjmuje wartość tego, na którym zatrzymał się back, czyli jeśli wsadzamy go na 4 pozycję to pokazuje na 5 element
-		temp->prev = back; //do preva nowego elementu dajemy adres tego, na którym zatrzymał się back
-		back->next->prev = temp; //prev elementu na pozycji po tym dodanym ma adres tego dodanego, czyli prev następnego obiektu na który wskazuje back
-		back->next = temp; //next backa pokazuje na nowy 
-	} else if (position > 1) { //a tutaj zrobić position==how_many(list)+1, czyli, że na ostatnią pozycję a potem osobnego elsa, że za lista jest za krótka dla podanej pozycji
-		elem* temp = new elem;
-		temp->data = data;
-		int counter = 1;
-		elem* back = list; 
-		while (counter != (position-1)) {
-			counter++;
-			back = back->next;
-			if (back == NULL) {
-				cout << "Lista za krotka";
-				return;
-			}
-		}
-		temp->next = back->next;
-		temp->prev = back;
-		back->next = temp;
-	} else {
-		cout << "Bledne dane";
-	}
-			
+void add_at_any_position(elem *&first, int x, int position){ //wstawiam z moimi nazwami zmiennych, bo nie chce mi się zmieniać ;)
+    if(!first){ //jeśli lista nie istnieje
+        elem *newElem=new elem;
+        newElem->data=x;
+        newElem->next=NULL;
+        newElem->prev=NULL;
+        first=newElem;
+    }
+    else if(first && position==1){ //jeśli chcemy wstawić po lewej stronie czyli na pierwszą pozycję
+        elem *newElem=new elem;
+        newElem->data=x;
+        newElem->next=first;
+        newElem->prev=NULL;
+        first->prev=newElem;
+        first=newElem;
+    }
+    else if(first && position>1){ //jeśli chcemy wstawić gdzieś w środku lub na końcu
+        elem *newElem=new elem;
+        newElem->data=x;
+        elem *ptr=first;
+        int counter=1;
+        while(counter!=(position-1)){
+            ptr=ptr->next;
+            counter++;
+            if(ptr=NULL){
+                cout << "Lista jest za krótka";
+                return;
+            }
+        }
+        if(ptr->next=NULL){ //jeśli na końcu
+            newElem->prev=ptr;
+            newElem->next=NULL;
+            ptr->next=newElem;
+        }
+        else{ //jeśli w środku
+        ptr->next->prev=newElem;
+        newElem->next=ptr->next;
+        newElem->prev=ptr;
+        ptr->next=newElem;}
+    }
 }
 
 void deletee(int index, elem*& list){
