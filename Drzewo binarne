@@ -2,28 +2,28 @@
 
 using namespace std;
 
-struct node {
+struct node { // tworzymy strukture
     int data;
     node* left;
     node* right;
 };
-void add (int data, node*& tree){
-    node* fresh = new node;
-    fresh->data = data;
-    fresh->left = NULL;
-    fresh->right = NULL;
-    if(tree != NULL){
-        node* prev = tree;
-        while(prev != NULL){
-            if(fresh->data >= prev->data){
-                if(prev->right == NULL){
-                    prev->right = fresh;
-                    break;
+void add (int data, node*& tree){           // MOZE TAK BEDZIE CZYTELNIEJSZE IDK    
+    node* fresh = new node;                 // tworzymy nowa strukture gdzie mozemy wsadzić nasze wartosci
+    fresh->data = data;                     // przekazujemy wartosc do wartosci
+    fresh->left = NULL;                     // ustawiamy galezie  na null iż nie wiemy co bedzie po prawej lub lewej stronie
+    fresh->right = NULL;                    // same
+    if(tree != NULL){                       // spprawdzamy czy drzewo jest puuste ten przyapdek rozpatruje ze nie jest puste
+        node* prev = tree;                  // zapisujemy poczatek dzrwa aby sie poruszać po nim nie to taki nasz runner albo helper 
+        while(prev != NULL){                // dopoki drzewo nie bedzie wskazywac na nulla
+            if(fresh->data >= prev->data){  // jesli wartosc naszego nowego elemetu jest wieksza BADZ ROWNA od KORZENIA/wezla n asteponego to idziemy w prawo
+                if(prev->right == NULL){    // teraz sprawdzamy czy jest wartosc obok wezla pusta jesli tak to wprowadzamy za nulla nulla napisujemy tak ?
+                    prev->right = fresh;    // to nadpisanie tutaj nastepuje
+                    break;                  // wychodzimy
                 }else{
-                    prev = prev->right;
+                    prev = prev->right;     // jesli nie natrafilismy napuste lecimy dalej z koxem tak w kolko 
                 }
-            }else{
-                if(prev->left == NULL){
+            }else{                          // tam mielismy wieksze lub = no to tu mniejsze jasna sprawa
+                if(prev->left == NULL){     // TA SAMA ZASAda jak wczesniej nie bede komentowac
                     prev->left = fresh;
                     break;
                 }else{
@@ -31,7 +31,7 @@ void add (int data, node*& tree){
                 }
             }
         }
-    }else{
+    }else{                                   // nasze drzewo jest puste czyli nasz swtorzony wezel jest na arzie sam
         tree = fresh;
     }
 }
