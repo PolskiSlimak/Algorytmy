@@ -169,19 +169,18 @@ bool search_rec(int tosearch, node*tree){                       // ogolnie to je
         search_rec(tosearch, tree->left);                       // same tylko ze wezel przechodzi na ten wezel ktory jest na lewo
     }
 }
-void preorder(node* tree){                                      // to jest to co Iwonka chciala pre to trzeba narysowac masz drzewo dajesz krope przed liczba i je laczysz
-    if(tree != NULL){                                           // to jest ten nasz staly wrunek jezelii w kozreniu nic nie ma to tam dalej tez nic nie ma i jest drzewo puste
-        cout << tree->data << " ";                              // wypisujemy wartosc najpierw z lewej i ogolnie lecimy po lewej stronie caly czas ???? dopoki ona sie nie skonczy?
-        preorder(tree->left);
-        preorder(tree->right);                                  // i jak lewa skonczymy to prawa wypisujemy ???ALe Danego wezla on tak jakby automatycznie retuje
-    }                                                           // jak call w assemblerze wytlumaczymy 
+void preorder(node* tree){                                      // rysowanie i tyle w skrocie szlaczek wolok wezlow 
+    if(tree != NULL){                                           // pre kropa na lewo
+        cout << tree->data << " ";                              // in kropa pod wezlem
+        preorder(tree->left);                                   //post kropa pod wezlem
+        preorder(tree->right);                                  // ogolnie to to retuje sobie sprytny c++ 
+    }                                                           //  
 }
 void inorder(node* tree){
-    if(tree != NULL){                                           // to tak samo sprawda lewo wypisuje 
-        inorder(tree->left);                                    // jezeli jest null pomijai leci od poczatku aaaa rozumiem to wyzje tak samo dziaala 
-        cout << tree->data << " ";                              // chyba z tm mam problem prosze to dobrze napisac albo ja poprawie jak uzbieram mysli 
-        inorder(tree->right);                                   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    }
+    if(tree != NULL){                                           // 
+        inorder(tree->left);                                    // 
+        cout << tree->data << " ";                              //  
+        inorder(tree->right);                                   //
 }
 void postorder(node* tree){
     if(tree != NULL){
