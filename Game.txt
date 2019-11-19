@@ -18,7 +18,16 @@ public class Game{
         this.player=player;
         list.add(this.player);
     }
-    
+    //Nierekurencyjne
+    /*public void addPlayer(Player player){
+        for(Player playerFromList : players){
+            if(playerFromList.getName().equals(player.getName())){
+                int num=random.nextInt(10);
+                player.setName(player.getName() + num);
+            }
+        }
+        players.add(player);
+    }*/
     public void play() {
         Random random = new Random();
         do {
