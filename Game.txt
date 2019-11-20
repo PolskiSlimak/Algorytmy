@@ -9,14 +9,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 public class Game{
-    private int number;
-    private int guess;
-    private Player player;
-    private List list = new ArrayList();
-    private Iterator i=list.iterator();
+    Random random=new Random();
+    //private Player player;
+    private List <Player> list=new ArrayList();
     public void addPlayer(Player player){
-        this.player=player;
-        list.add(this.player);
+        if(list!= null){
+            String imie = player.getName();
+            for (Player player1: list){
+                if(player1.getName().equals(imie)){
+                    player.setName(imie+"a");
+                    addPlayer(player);
+                    return;
+                }
+            }
+        }
+        list.add(player);
+    }
+    public void printPlayers(){
+        for(Player pl : list){
+            System.out.println(pl.getName());
+        }
+    }
+    public void deletePlayer(String name){
+        
     }
     //Nierekurencyjne
     /*public void addPlayer(Player player){
@@ -28,18 +43,24 @@ public class Game{
         }
         players.add(player);
     }*/
-    public void play() {
-        Random random = new Random();
-        do {
-            number = random.nextInt(6) + 1;
-            guess = player.guess();
-            System.out.println(player.getName() + " is trying to guess what's on the dice: " + guess);
-            if (number != guess) {
-                System.out.println("Try again!");
-            } else {
-                System.out.println(player.getName() + " won!");
+    public void play(){
+        int number;
+        int guess;
+        boolean repeat;
+        do{
+            repeat = true;
+            number=random.nextInt(6)+1;
+            for (Player player : list){
+                guess=player.guess();
+                System.out.println(player.getName() + " is trying to guess what's on the dice: " + guess);
+                if(number!=guess)
+                     System.out.println("Try again!");
+                else{
+                    System.out.println("Brawo");
+                    repeat = false;
+                }
             }
 
-        } while (guess != number);
+        }while(repeat);
     }
 }
