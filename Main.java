@@ -12,7 +12,7 @@ public class JavaApplication7 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Random random = new Random();
+       /* Random random = new Random();
         Player player = new PlayerHuman();
         List<String> list = new ArrayList();
         list.add("jeden");
@@ -42,6 +42,14 @@ public class JavaApplication7 {
         } catch (IllegalArgumentException ex) {
             System.err.println("BLAD " + ex.getMessage());
         }*/
+*/
+        Random random=new Random();
+        Game game1=new Game();
+        game1.addPlayer(new PlayerHuman("Janusz"));
+        game1.addPlayer(new PlayerHuman("Janusz"));
+        game1.addPlayer(new PlayerHuman("Janusz"));
+        game1.play();
+        game1.printPlayers();
 
     }
 
