@@ -1,40 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package javaapplication7;
+import javafx.embed.swing.SwingNode;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-public class Game{
+
+public class Game {
+
     Random random=new Random();
-    //private Player player;
-    private List <Player> list=new ArrayList();
+    private Player player;
+    private List<Player> players=new ArrayList<>();
+    private Statistics statistics;
+
+    public Game(Statistics statistics){
+        if(statistics == null){
+            throw new NullPointerException("wpisales nulla!");
+        }
+        this.statistics=statistics;
+    }
+
+
     public void addPlayer(Player player){
-        if(list!= null){
-            String imie = player.getName();
-            for (Player player1: list){
-                if(player1.getName().equals(imie)){
-                    player.setName(imie+"a");
-                    addPlayer(player);
-                    return;
-                }
-            }
-        }
-        list.add(player);
-    }
-    public void printPlayers(){
-        for(Player pl : list){
-            System.out.println(pl.getName());
-        }
-    }
-    public void deletePlayer(String name){
-        
-    }
-    //Nierekurencyjne
-    /*public void addPlayer(Player player){
         for(Player playerFromList : players){
             if(playerFromList.getName().equals(player.getName())){
                 int num=random.nextInt(10);
@@ -42,25 +28,54 @@ public class Game{
             }
         }
         players.add(player);
-    }*/
+    }
+
     public void play(){
         int number;
         int guess;
         boolean repeat;
+
         do{
-            repeat = true;
+            System.out.println("-----------------------------");
+
+            repeat=true;
+
             number=random.nextInt(6)+1;
-            for (Player player : list){
+            System.out.println("Kostka: " + number);
+
+            for(Player player : players){
                 guess=player.guess();
+
                 System.out.println(player.getName() + " is trying to guess what's on the dice: " + guess);
                 if(number!=guess)
-                     System.out.println("Try again!");
+                    System.out.println("Try again!");
                 else{
-                    System.out.println("Brawo");
-                    repeat = false;
+                    System.out.println(player.getName() + " won!");
+                    repeat=false;
+                    statistics.winner(player);
                 }
+
             }
 
         }while(repeat);
+    }
+
+    public void showPlayers(){
+
+//        Iterator itr=players.iterator();
+//
+//        while(itr.hasNext()){
+//            System.out.println(itr.next());
+//        }
+
+        for(Player player : players){
+            System.out.println(player.getName());
+        }
+
+
+    }
+
+    public void printStats(){
+        if(statistics!=null) statistics.print();
     }
 }
